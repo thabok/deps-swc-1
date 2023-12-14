@@ -1,0 +1,7 @@
+# simulink cache & generated files
+*.slxc
+*_ert_rtw/
+slprj/
+
+# ignore shared modules that are added by the package manager 
+shared/
