@@ -22,5 +22,5 @@ class SWC1(ConanFile):
         # copy model files from dependencies root folder into
         # folders with the dep-name inside the build_folder
         for dep in self.dependencies.values():
-            copy(self, "*.slx", dep.package_folder, join(self.build_folder, 'shared', dep.ref.name))
+            copy(self, "*.slx", dep.package_folder, join(self.build_folder, 'shared'))
 

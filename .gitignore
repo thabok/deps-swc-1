@@ -5,3 +5,4 @@ slprj/
 
 # ignore shared modules that are added by the package manager 
 shared/
+conan.log
