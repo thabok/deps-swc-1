@@ -1,0 +1,33 @@
+name: Unit Tests with BTC (RBT+B2B) for dependency update PRs
+
+# run on push if there are changes in the paths listed below
+on:
+  pull_request:
+    types: [opened, reopened]
+    paths: [conanfile.py]
+
+jobs:
+  # This workflow contains a single job called "test"
+  test:
+    # Runs on a pre-configured VM with 
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v3
+      
+      - name: BTC API Wrapper for Python
+        run: pip install btc_embedded
+        shell: cmd
+
+      - name: Run test workflow
+        run:  python test/run_tests.py "${{github.workspace}}/test/swc_1.epp"
+        
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_results
+          path: |
+            test/swc_1.epp
+            test/test_report.html
+          

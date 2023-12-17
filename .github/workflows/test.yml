@@ -1,0 +1,37 @@
+name: Unit Tests with BTC (RBT+B2B)
+
+# run on push if there are changes in the paths listed below
+on:
+  push:
+    paths:
+      - .github/workflows/test.yml
+      - test/run_tests.py
+      - '*.slx'
+      - '*.epp'
+  workflow_dispatch: # allow workflow to be triggered manually
+
+jobs:
+  # This workflow contains a single job called "test"
+  test:
+    # Runs on a pre-configured VM with 
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v3
+      
+      - name: BTC API Wrapper for Python
+        run: pip install btc_embedded
+        shell: cmd
+
+      - name: Run test workflow
+        run:  python test/run_tests.py "${{github.workspace}}/test/shared_module_a.epp"
+        
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: TestResults
+          path: |
+            test/shared_module_a.epp
+            test/test_report.html
+          
