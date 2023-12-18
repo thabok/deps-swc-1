@@ -1,12 +1,15 @@
-import os
 import sys
+from glob import glob
+from os import getcwd
+from os.path import abspath, dirname
 
 from btc_embedded import EPRestApi, util
 
 
-def run_btc_test(epp_path, work_dir=os.getcwd()):
-    epp_path = os.path.abspath(epp_path)
-    work_dir = os.path.dirname(epp_path)
+def run_btc_test(epp_path, matlab_project_path, work_dir=getcwd()):
+    epp_path = abspath(epp_path)
+    matlab_project_path = abspath(matlab_project_path)
+    work_dir = dirname(epp_path)
     
     # BTC EmbeddedPlatform API object
     ep = EPRestApi()
@@ -14,8 +17,10 @@ def run_btc_test(epp_path, work_dir=os.getcwd()):
     # Load a BTC EmbeddedPlatform profile (*.epp)
     ep.get(f'profiles/{epp_path}?discardCurrentProfile=true', message="Loading profile")
 
-    # Update architecture (incl. code generation)
-    ep.put('architectures', message="Updating Architecture")
+    # Load ML Project & generate code generation
+    ml_obj = {'scriptName' : 'openProject', 'outArgs' : 1, 'inArgs' : [ matlab_project_path ]}
+    ep.post('execute-long-matlab-script', ml_obj, message="Loading Matlab Project")
+    ep.put('architectures', message="Analyzing Model & Generating Code")
 
     # Execute requirements-based tests
     scopes = ep.get('scopes')
@@ -53,7 +58,8 @@ def run_btc_test(epp_path, work_dir=os.getcwd()):
 
 # if the script is called directly: expect
 # - the first argument to be the epp path
+# - the sedocnd argument to be the ml project path
 if __name__ == '__main__':
-    run_btc_test(sys.argv[1])
-    # run_btc_test('test/shared_module_a.epp')
+    run_btc_test(sys.argv[1], sys.argv[2])
+    # run_btc_test('test/swc_1.epp', 'swc_1.prj')
     

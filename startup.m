@@ -7,8 +7,9 @@ if status ~= 0 && ~contains(getenv('PATH'), '/opt/homebrew/bin')
 end
 
 % run conan install and dump output to log file
-[status, ~] = system('conan install . &> conan.log');
+[status, output] = system('conan install .');
 if status ~= 0
     % warn in case of problems
-    disp('Could not resolve dependencies with Conan.');
+    disp('Could not resolve dependencies with Conan:');
+    disp(output);
 end

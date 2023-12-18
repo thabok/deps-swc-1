@@ -4,7 +4,6 @@ name: Unit Tests with BTC (RBT+B2B) for dependency update PRs
 on:
   pull_request:
     types: [opened, reopened]
-    paths: [conanfile.py]
 
 jobs:
   # This workflow contains a single job called "test"
@@ -21,7 +20,7 @@ jobs:
         shell: cmd
 
       - name: Run test workflow
-        run:  python test/run_tests.py "${{github.workspace}}/test/swc_1.epp"
+        run:  python test/run_tests.py "${{github.workspace}}/test/swc_1.epp swc_1.prj"
         
       - name: Archive test results
         uses: actions/upload-artifact@v3

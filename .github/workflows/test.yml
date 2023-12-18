@@ -25,13 +25,13 @@ jobs:
         shell: cmd
 
       - name: Run test workflow
-        run:  python test/run_tests.py "${{github.workspace}}/test/shared_module_a.epp"
+        run:  python test/run_tests.py "${{github.workspace}}/test/swc_1.epp swc_1.prj"
         
       - name: Archive test results
         uses: actions/upload-artifact@v3
         with:
-          name: TestResults
+          name: test_results
           path: |
-            test/shared_module_a.epp
+            test/swc_1.epp
             test/test_report.html
-          
+            
