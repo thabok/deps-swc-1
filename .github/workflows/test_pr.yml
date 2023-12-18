@@ -20,7 +20,7 @@ jobs:
         shell: cmd
 
       - name: Run test workflow
-        run:  python test/run_tests.py "${{github.workspace}}/test/swc_1.epp swc_1.prj"
+        run:  python test/run_tests.py "${{github.workspace}}/test/swc_1.epp" "swc_1.prj"
         
       - name: Archive test results
         uses: actions/upload-artifact@v3
