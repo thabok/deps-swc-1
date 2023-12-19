@@ -1,0 +1,34 @@
+name: Version Update Check
+
+# run on push if there are changes in the paths listed below
+on:
+  schedule:
+    - cron: '0 0 * * *' # every day at midnight
+  workflow_dispatch: # allow workflow to be triggered manually
+
+jobs:
+  # workflow
+  version_update:
+    runs-on: self-hosted
+    
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v3
+      
+      - name: Prepare Python
+        run: pip install -r scripts/requirements.txt
+        shell: cmd
+
+      - name: Run test workflow
+        env:
+          GH_REPOSITORY: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run:  python scripts/update_dependencies.py
+        
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test_results
+          path: |
+            test/swc_1.epp
+            test/test_report.html
