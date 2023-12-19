@@ -2,6 +2,7 @@
 *.slxc
 *_ert_rtw/
 slprj/
+*.html
 
 # ignore shared modules that are added by the package manager 
 shared/
