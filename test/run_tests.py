@@ -18,7 +18,7 @@ def run_btc_test(epp_path, matlab_project_path, work_dir=getcwd()):
     ep.get(f'profiles/{epp_path}?discardCurrentProfile=true', message="Loading profile")
 
     # Load ML Project & generate code generation
-    ml_obj = {'scriptName' : 'openProject', 'outArgs' : 1, 'inArgs' : [ matlab_project_path ]}
+    ml_obj = {'scriptName' : 'openProject', 'outArgs' : 0, 'inArgs' : [ matlab_project_path ]}
     ep.post('execute-long-matlab-script', ml_obj, message="Loading Matlab Project")
     ep.put('architectures', message="Analyzing Model & Generating Code")
 
@@ -60,6 +60,6 @@ def run_btc_test(epp_path, matlab_project_path, work_dir=getcwd()):
 # - the first argument to be the epp path
 # - the sedocnd argument to be the ml project path
 if __name__ == '__main__':
-    run_btc_test(sys.argv[1], sys.argv[2])
-    # run_btc_test('test/swc_1.epp', 'swc_1.prj')
+    # run_btc_test(sys.argv[1], sys.argv[2])
+    run_btc_test('test/swc_1.epp', 'swc_1.prj')
     
