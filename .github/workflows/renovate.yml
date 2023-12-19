@@ -11,18 +11,17 @@ jobs:
   # workflow
   version_update:
     runs-on: self-hosted
+    container:
+      image: renovate/renovate:latest
     
     steps:
       - name: Checkout repo content
         uses: actions/checkout@v3
       
-      - name: Prepare Python
-        run: pip install -r scripts/requirements.txt
-        shell: cmd
-
-      - name: Run test workflow
+      - name: Dependency Update
+        run: renovate --conan
         env:
-          GH_REPO: ${{ github.repository }}
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run:  python scripts/update_dependencies.py
-      
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CONAN_USER: ${{ secrets.CONAN_USER }}
+          CONAN_PASSWORD: ${{ secrets.CONAN_PASSWORD }}
+        
