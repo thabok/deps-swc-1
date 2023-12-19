@@ -3,7 +3,7 @@ name: Version Update Check
 # run on push if there are changes in the paths listed below
 on:
   schedule:
-    - cron: '0 0 * * *' # every day at midnight
+    - cron: '0 0 * * 0' # sunday at midnight
   workflow_dispatch: # allow workflow to be triggered manually
 
 jobs:
