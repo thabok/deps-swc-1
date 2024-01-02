@@ -20,7 +20,7 @@ jobs:
         run: pip install -r scripts/requirements.txt
         shell: cmd
 
-      - name: Run test workflow
+      - name: Update dependencies
         env:
           GH_REPO: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.REPO_TOKEN }}
