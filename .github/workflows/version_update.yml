@@ -23,5 +23,6 @@ jobs:
       - name: Update dependencies
         env:
           GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.REPO_TOKEN }}
         run:  python scripts/update_dependencies.py
       
