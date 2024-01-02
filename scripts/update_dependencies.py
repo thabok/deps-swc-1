@@ -9,12 +9,12 @@ from github import Github
 
 
 # main method (toplevel call)
-def update_and_create_pr(gh_repo, gh_token, conan_remote, conanfile='./conanfile.py'):
+def update_and_create_pr(gh_repo, conan_remote, conanfile='./conanfile.py'):
     # parse & fetch dependency info -> update conanfile
     changes = update_dependencies(conan_remote, conanfile)
 
     # push changes to branch and create PR
-    push_to_branch_and_create_pr(gh_repo, gh_token, changes)
+    push_to_branch_and_create_pr(gh_repo, changes)
 
 
 # secondary function A
@@ -48,7 +48,7 @@ def update_dependencies(conan_remote, conanfile='./conanfile.py'):
 
 
 # secondary function B
-def push_to_branch_and_create_pr(gh_repo, gh_token, changes=None):
+def push_to_branch_and_create_pr(gh_repo, changes=None):
     if changes:
         # Initialize a Git repo
         repo = Repo('.')
@@ -67,7 +67,7 @@ def push_to_branch_and_create_pr(gh_repo, gh_token, changes=None):
             repo.git.push('--set-upstream', 'origin', branch_name)
 
             # Create a pull request (this requires a GitHub access token)
-            g = Github(gh_token)
+            g = Github()
             repo = g.get_repo(gh_repo)
             repo.create_pull(title=f'Update dependencies to latest versions', body='', head=branch_name, base='main')
             return
@@ -88,5 +88,4 @@ def update_conanfile(conanfile_path, package_name, new_version):
 if __name__ == '__main__':
     # gh_repo, gh_token, conan_remote, conanfile
     repo = os.environ['GH_REPO']
-    token = os.environ['GH_TOKEN']
-    update_and_create_pr(repo, token, "artifactory")
+    update_and_create_pr(repo, "artifactory")
