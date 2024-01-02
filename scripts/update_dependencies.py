@@ -37,8 +37,13 @@ def update_dependencies(conan_remote, conanfile='./conanfile.py'):
                 # Replace the version in the conanfile.py
                 update_conanfile(conanfile, name, latest_version)
                 changes += f"{name}: {version} -> {latest_version}\n"
-        except:
+        except Exception as e:
+            print(f"Error while using 'conan search' to find information on dependency '{name}'")
             continue
+    
+    if changes: print("Updated dependencies:\n" + changes)
+    else:       print("No dependency updates found.")
+
     return changes
 
 
@@ -68,7 +73,7 @@ def push_to_branch_and_create_pr(gh_repo, gh_token, changes=None):
             return
 
     # else (if no changes):
-    print("No changes detected - nothing to push")
+    print("No changes detected - nothing to push.")
 
 
 # helper function
