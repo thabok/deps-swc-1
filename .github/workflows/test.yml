@@ -1,14 +1,12 @@
-name: Unit Tests with BTC (RBT+B2B)
+name: SWC level tests with BTC (RBT + B2B)
 
 # run on push if there are changes in the paths listed below
 on:
-  push:
-    paths:
-      - .github/workflows/test.yml
-      - test/run_tests.py
-      - '*.slx'
-      - '*.epp'
-  workflow_dispatch: # allow workflow to be triggered manually
+  pull_request:
+    types: [opened, reopened]
+  
+  # allow workflow to be triggered manually
+  workflow_dispatch:
 
 jobs:
   # This workflow contains a single job called "test"

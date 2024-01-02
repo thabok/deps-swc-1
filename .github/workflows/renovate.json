@@ -1,8 +1,0 @@
-{
-    "extends": ["config:base"],
-    "conan": true,
-    "conanPackageSettings": {
-      "updateSchedule": ["every weekend"]
-    }
-  }
-  
