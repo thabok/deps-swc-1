@@ -11,15 +11,14 @@ jobs:
   # workflow
   version_update:
     runs-on: self-hosted
-    container:
-      image: renovate/renovate:latest
     
     steps:
       - name: Checkout repo content
         uses: actions/checkout@v3
       
       - name: Dependency Update
-        run: renovate --conan
+        run: docker run --rm renovate/renovate --conan
+        shell: cmd
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CONAN_USER: ${{ secrets.CONAN_USER }}
