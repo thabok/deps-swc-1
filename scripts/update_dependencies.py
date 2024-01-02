@@ -44,28 +44,31 @@ def update_dependencies(conan_remote, conanfile='./conanfile.py'):
 
 # secondary function B
 def push_to_branch_and_create_pr(gh_repo, gh_token, changes=None):
-    # Initialize a Git repo
-    repo = Repo('.')
+    if changes:
+        # Initialize a Git repo
+        repo = Repo('.')
 
-    # Create a new branch
-    branch_name = 'version-change-' + datetime.now().strftime('%Y-%m-%d_%H%M%S')
-    new_branch = repo.create_head(branch_name)
-    new_branch.checkout()
+        # Create a new branch
+        branch_name = 'version-change-' + datetime.now().strftime('%Y-%m-%d_%H%M%S')
+        new_branch = repo.create_head(branch_name)
+        new_branch.checkout()
         
-    # Check if there are changes
-    if repo.is_dirty() and changes:
-        # Commit the changes
-        repo.git.commit('-am', f'Update dependencies to latest versions')
+        # Check if there are actual changes
+        if repo.is_dirty():
+            # Commit the changes
+            repo.git.commit('-am', f'Update dependencies to latest versions')
 
-        # Push the branch
-        repo.git.push('--set-upstream', 'origin', branch_name)
+            # Push the branch
+            repo.git.push('--set-upstream', 'origin', branch_name)
 
-        # Create a pull request (this requires a GitHub access token)
-        g = Github(gh_token)
-        repo = g.get_repo(gh_repo)
-        repo.create_pull(title=f'Update dependencies to latest versions', body='', head=branch_name, base='main')
-    else:
-        print("No changes detected - nothing to push")
+            # Create a pull request (this requires a GitHub access token)
+            g = Github(gh_token)
+            repo = g.get_repo(gh_repo)
+            repo.create_pull(title=f'Update dependencies to latest versions', body='', head=branch_name, base='main')
+            return
+
+    # else (if no changes):
+    print("No changes detected - nothing to push")
 
 
 # helper function
