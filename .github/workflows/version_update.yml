@@ -1,4 +1,3 @@
-# obsolete alternative to renovate bot (custom script for same purpose)
 name: Version Update Check
 
 # run regularly or on demand
