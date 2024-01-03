@@ -1,6 +1,6 @@
 name: SWC level tests with BTC (RBT + B2B)
 
-# run on push if there are changes in the paths listed below
+# run on pull (re-)opened requests or on demand
 on:
   pull_request:
     types: [opened, reopened]
