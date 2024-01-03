@@ -1,10 +1,10 @@
 # obsolete alternative to renovate bot (custom script for same purpose)
 name: Version Update Check
 
-# run on push if there are changes in the paths listed below
+# run regularly or on demand
 on:
   schedule:
-    - cron: '0 0 * * 0' # sunday at midnight
+    - cron: '0 0 * * *' # at midnight
   workflow_dispatch: # allow workflow to be triggered manually
 
 jobs:
