@@ -60,6 +60,6 @@ def run_btc_test(epp_path, matlab_project_path, work_dir=getcwd()):
 # - the first argument to be the epp path
 # - the sedocnd argument to be the ml project path
 if __name__ == '__main__':
-    # run_btc_test(sys.argv[1], sys.argv[2])
-    run_btc_test('test/swc_1.epp', 'swc_1.prj')
+    run_btc_test(sys.argv[1], sys.argv[2])
+    # run_btc_test('test/swc_1.epp', 'swc_1.prj')
     
