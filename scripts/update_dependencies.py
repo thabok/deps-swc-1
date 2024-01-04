@@ -70,6 +70,7 @@ def push_to_branch_and_create_pr(gh_repo, gh_token, changes=None):
             g = Github(gh_token)
             repo = g.get_repo(gh_repo)
             repo.create_pull(title=f'Update dependencies to latest versions', body=changes, head=branch_name, base='main')
+            print("Created pull request for dependency update changes.")
             return
 
     # else (if no changes):
