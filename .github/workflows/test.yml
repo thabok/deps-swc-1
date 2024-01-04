@@ -18,8 +18,12 @@ jobs:
       - name: Checkout repo content
         uses: actions/checkout@v3
       
-      - name: BTC API Wrapper for Python
-        run: pip install btc_embedded
+      - name: Ensure required python packages
+        run: pip install -r scripts/requirements.txt
+        shell: cmd
+
+      - name: Resolve model dependencies
+        run: conan install .
         shell: cmd
 
       - name: Run test workflow
