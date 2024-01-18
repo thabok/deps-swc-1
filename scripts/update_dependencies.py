@@ -6,6 +6,7 @@ from datetime import datetime
 
 from git import Repo
 from github import Github
+from packaging import version
 
 
 # main method (toplevel call)
@@ -26,17 +27,23 @@ def update_dependencies(conan_remote, conanfile='./conanfile.py'):
     changes = ""
     for dep in deps:
         try:
-            name, version = dep['ref'].split('/')
+            name, current_version = dep['ref'].split('/')
             # Get the latest version from Conan
             output = subprocess.check_output(['conan', 'search', f'{name}', '-r', conan_remote, '-f', 'json']).decode('utf-8')
             out_obj = json.loads(output)
             versions = list(out_obj[conan_remote].keys())
             _, latest_version = versions[-1].split('/')
             # Check if the latest version is greater than the current version
-            if latest_version > version:
+            latest_version = version.parse(latest_version)
+            current_version = version.parse(current_version)
+            if latest_version > current_version:
+                # only accept minor & bugfix updates
+                if latest_version.major > current_version.major:
+                    print(f"Skipping major update from {current_version} to {latest_version}")
+
                 # Replace the version in the conanfile.py
                 update_conanfile(conanfile, name, latest_version)
-                changes += f"{name}: {version} -> {latest_version}\n"
+                changes += f"{name}: {current_version} -> {latest_version}\n"
         except Exception as e:
             print(f"Error while using 'conan search' to find information on dependency '{name}'")
             continue
