@@ -11,7 +11,7 @@ class SWC1(ConanFile):
     license = "MIT"
     url = "https://github.com/thabok/deps-swc-1"
     description = "Conan package for SWC1"
-    requires = "shared_module_a/1.3.0"
+    requires = "shared_module_a/1.4.0"
 
 
     def generate(self):
