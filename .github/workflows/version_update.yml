@@ -2,8 +2,8 @@ name: Version Update Check
 
 # run regularly or on demand
 on:
-  schedule:
-    - cron: '0 0 * * *' # at midnight
+  # schedule:
+  #  - cron: '0 0 * * *' # at midnight
   workflow_dispatch: # allow workflow to be triggered manually
 
 jobs:
