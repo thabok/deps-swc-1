@@ -2,3 +2,4 @@ btc_embedded
 GitPython
 PyGithub
 conan
+packaging
